@@ -11,7 +11,7 @@ BIN = libsockc
 BINS = libsockc.so
 BUILD_DIR = bin
 LIB_DIR = lib
-CFLAGS = -std=c18 -Wall
+CFLAGS = -std=c18 -Wall -g -DDEBUG
 
 # All .c source files
 SRC = src/sockets.c
@@ -22,7 +22,7 @@ OUT = libsockc.so
 all: $(OUT)
 
 $(OUT): $(subst .c,.o,$(SRC))
-	$(CC) $(CLAGS) -shared -fpic -o $(OUT_DIR)/$@ $^
+	$(CC) $(CLAGS) -g -DDEBUG -shared -fpic -o $(OUT_DIR)/$@ $^
 
 # prevent confusion with any files named "clean"
 .PHONY: clean

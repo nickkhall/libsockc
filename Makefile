@@ -22,7 +22,7 @@ OUT = libsockc.so
 all: $(OUT)
 
 $(OUT): $(subst .c,.o,$(SRC))
-	$(CC) $(CLAGS) -g -DDEBUG -shared -fpic -o $(OUT_DIR)/$@ $^
+	$(CC) $(CFLAGS) -g -DDEBUG -shared -fpic -o $(OUT_DIR)/$@ $^
 
 # prevent confusion with any files named "clean"
 .PHONY: clean

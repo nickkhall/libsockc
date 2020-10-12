@@ -35,6 +35,7 @@ int* socklib_socket_create(int port) {
   
   // dest.sin_addr = *((struct in_addr*) host->h_addr_list);
   memcpy(&dest->sin_addr, host->h_addr_list[0], host->h_length);
+  memset(&dest->sin_zero, '\0', sizeof(dest->sin_zero));
 
   int socket_type = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
   *sockfd = socket_type;

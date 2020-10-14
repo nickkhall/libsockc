@@ -17,7 +17,7 @@
  *
  * -------------------------------------------
  */
-int* socklib_socket_create(int port) {
+int* socklib_socket_create(int port, int tcp) {
   // destination socket pointer
   struct sockaddr_in* dest = (struct sockaddr_in*) malloc(sizeof(struct sockaddr_in));
   int addr_family = AF_INET;
@@ -35,9 +35,12 @@ int* socklib_socket_create(int port) {
   
   // dest.sin_addr = *((struct in_addr*) host->h_addr_list);
   memcpy(&dest->sin_addr, host->h_addr_list[0], host->h_length);
+  memset(&dest->sin_zero, '\0', sizeof(dest->sin_zero));
 
-  int socket_type = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
-  *sockfd = socket_type;
+  int socket_type = tcp ? SOCK_STREAM : SOCK_DGRAM;
+  int proto_type = tcp ? IPPROTO_TCP : IPPROTO_UDP;
+  int _socket = socket(AF_INET, socket_type, proto_type);
+  memcpy(sockfd, (int*)&_socket, sizeof(int));
   if (*sockfd == -1) {
     printf("ERROR:: Socket creation failed...\n");
     return NULL;
@@ -95,20 +98,20 @@ struct sockaddr_in* socklib_socket_build_sock_addr_in(int* sockfd, int family, i
  * ---------------------------------------------------
  */
 int socklib_socket_send_to(int* sockfd, const void* buffer,
-                             int buffer_data_size,
-                             int flags,
-                             const struct sockaddr* dest_addr,
-                             socklen_t addr_len)
+                           int buffer_data_size,
+                           int flags,
+                           const struct sockaddr* dest_addr,
+                           socklen_t addr_len)
 {
-  int res = sendto(*sockfd, (char*)buffer,
-                buffer_data_size,
-                flags,
-                dest_addr,
-                addr_len);
+  int res = sendto(*sockfd,
+                   (char*)buffer,
+                   buffer_data_size,
+                   flags,
+                   dest_addr,
+                   addr_len);
 
   if (res == -1) {
-    printf("ERROR:: REST - Failed to send data to rpc,\n sockfd: %d,\n buffer: %s,\n buffer_data_size: %d,\nflags: %d,\naddr_len: %d\n",
-            *sockfd, (char*)buffer, buffer_data_size, flags, addr_len);
+    printf("ERROR:: REST - Failed to send data to rpc.\n");
     free(sockfd);
     free((char*)buffer);
     // for now, just terminate application

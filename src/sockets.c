@@ -17,7 +17,7 @@
  *
  * -------------------------------------------
  */
-int* socklib_socket_create(int port) {
+int* socklib_socket_create(int port, int tcp) {
   // destination socket pointer
   struct sockaddr_in* dest = (struct sockaddr_in*) malloc(sizeof(struct sockaddr_in));
   int addr_family = AF_INET;
@@ -37,6 +37,8 @@ int* socklib_socket_create(int port) {
   memcpy(&dest->sin_addr, host->h_addr_list[0], host->h_length);
   memset(&dest->sin_zero, '\0', sizeof(dest->sin_zero));
 
+  char* socket_type = tcp ? SOCK_STREAM : SOCK_DGRAM;
+  char*  // finishe implementing tcp and udp
   int socket_type = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
   *sockfd = socket_type;
   if (*sockfd == -1) {

@@ -37,10 +37,10 @@ int* socklib_socket_create(int port, int tcp) {
   memcpy(&dest->sin_addr, host->h_addr_list[0], host->h_length);
   memset(&dest->sin_zero, '\0', sizeof(dest->sin_zero));
 
-  char* socket_type = tcp ? SOCK_STREAM : SOCK_DGRAM;
-  char*  // finishe implementing tcp and udp
-  int socket_type = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
-  *sockfd = socket_type;
+  int socket_type = tcp ? SOCK_STREAM : SOCK_DGRAM;
+  int proto_type = tcp ? IPPROTO_TCP : IPPROTO_UDP;
+  int _socket = socket(AF_INET, socket_type, proto_type);
+  memcpy(sockfd, (int*)&_socket, sizeof(int));
   if (*sockfd == -1) {
     printf("ERROR:: Socket creation failed...\n");
     return NULL;

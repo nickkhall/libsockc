@@ -98,20 +98,20 @@ struct sockaddr_in* socklib_socket_build_sock_addr_in(int* sockfd, int family, i
  * ---------------------------------------------------
  */
 int socklib_socket_send_to(int* sockfd, const void* buffer,
-                             int buffer_data_size,
-                             int flags,
-                             const struct sockaddr* dest_addr,
-                             socklen_t addr_len)
+                           int buffer_data_size,
+                           int flags,
+                           const struct sockaddr* dest_addr,
+                           socklen_t addr_len)
 {
-  int res = sendto(*sockfd, (char*)buffer,
-                buffer_data_size,
-                flags,
-                dest_addr,
-                addr_len);
+  int res = sendto(*sockfd,
+                   (char*)buffer,
+                   buffer_data_size,
+                   flags,
+                   dest_addr,
+                   addr_len);
 
   if (res == -1) {
-    printf("ERROR:: REST - Failed to send data to rpc,\n sockfd: %d,\n buffer: %s,\n buffer_data_size: %d,\nflags: %d,\naddr_len: %d\n",
-            *sockfd, (char*)buffer, buffer_data_size, flags, addr_len);
+    printf("ERROR:: REST - Failed to send data to rpc.\n");
     free(sockfd);
     free((char*)buffer);
     // for now, just terminate application

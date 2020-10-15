@@ -12,7 +12,7 @@
  *
  * -------------------------------------------
  */
-int* socklib_socket_create(int port, int tcp);
+int* socklib_socket_create(char* host, int port, int tcp);
 
 
 /*

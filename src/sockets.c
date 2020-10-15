@@ -17,7 +17,7 @@
  *
  * -------------------------------------------
  */
-int* socklib_socket_create(int port, int tcp) {
+int* socklib_socket_create(char* host, int port, int tcp) {
   // destination socket pointer
   struct sockaddr_in* dest = (struct sockaddr_in*) malloc(sizeof(struct sockaddr_in));
   int addr_family = AF_INET;
@@ -31,10 +31,9 @@ int* socklib_socket_create(int port, int tcp) {
   memcpy(&dest->sin_family, &addr_family, sizeof(int));
   memcpy(&dest->sin_port, &addr_port, sizeof(int));
 
-  struct hostent* host = (struct hostent*) gethostbyname("127.0.0.1");
+  struct hostent* _host = (struct hostent*) gethostbyname(host);
   
-  // dest.sin_addr = *((struct in_addr*) host->h_addr_list);
-  memcpy(&dest->sin_addr, host->h_addr_list[0], host->h_length);
+  memcpy(&dest->sin_addr, _host->h_addr_list[0], _host->h_length);
   memset(&dest->sin_zero, '\0', sizeof(dest->sin_zero));
 
   int socket_type = tcp ? SOCK_STREAM : SOCK_DGRAM;

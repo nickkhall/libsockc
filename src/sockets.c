@@ -70,7 +70,7 @@ struct sockaddr_in* socklib_socket_build_sock_addr_in(int* sockfd, int family, i
   dest->sin_family = family;
   dest->sin_port = htons(port);
 
-  struct hostent* host = (struct hostent*) gethostbyname("127.0.0.1");
+  struct hostent* host = (struct hostent*) gethostbyname("0.0.0.0");
   if (!host) {
     printf("ERROR:: REST - Failed to get host in build_sock_addr_in\n");
     return NULL;

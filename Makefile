@@ -8,7 +8,7 @@ SRC = src/sockc.c
 HDR = include/sockc.h
 
 BIN = libsockc
-BINS = libsockc.so
+BINS = sockc.so
 BUILD_DIR = bin
 LIB_DIR = lib
 CFLAGS = -std=c18 -Wall
@@ -18,7 +18,7 @@ SRC = src/sockc.c
 
 all: $(BINS)
 
-libsockc.so: $(SRC) $(HDR)
+$(BINS): $(SRC) $(HDR)
 	$(CC) -g -DDEBUG $(CFLAGS) -fPIC -shared -o $(LIB_DIR)/$@ $(SRC) -lc
 
 # prevent confusion with any files named "clean"

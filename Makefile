@@ -8,7 +8,7 @@ SRC = src/sockc.c
 HDR = include/sockc.h
 
 BIN = libsockc
-BINS = sockc.so
+BINS = libsockc.so
 BUILD_DIR = bin
 LIB_DIR = lib
 CFLAGS = -std=c18 -Wall

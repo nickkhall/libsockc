@@ -17,7 +17,13 @@
  *
  * -------------------------------------------
  */
-int* socklib_socket_create(int port) {
+int* socklib_socket_create(int port, int sock_type) {
+  if (!port || !sock_type) {
+    int* ret_val = (int*) malloc(sizeof(int));
+
+    *ret_val = -1;
+    return ret_val;
+  }
   // destination socket pointer
   struct sockaddr_in* dest = (struct sockaddr_in*) malloc(sizeof(struct sockaddr_in));
   int addr_family = AF_INET;
@@ -36,7 +42,7 @@ int* socklib_socket_create(int port) {
   // dest.sin_addr = *((struct in_addr*) host->h_addr_list);
   memcpy(&dest->sin_addr, host->h_addr_list[0], host->h_length);
 
-  int socket_type = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
+  int socket_type = socket(AF_INET, ((sock_type > -1) ? sock_type : 3), (sock_type == 3) ? IPPROTO_TCP : IPPROTO_UDP);
   *sockfd = socket_type;
   if (*sockfd == -1) {
     printf("ERROR:: Socket creation failed...\n");

@@ -5,14 +5,15 @@
 
 /*
  * -------------------------------------------
- *
+ * function: socklib_socket_create
  * -------------------------------------------
- *
+ * params  : port        - int
+ *           sock_type - int
  * -------------------------------------------
- *
+ * Handles creating a socket.
  * -------------------------------------------
  */
-int* socklib_socket_create(int port);
+int* socklib_socket_create(int port, int sock_type);
 
 
 /*
